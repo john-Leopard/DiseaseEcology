@@ -56,4 +56,4 @@ hist (tickdata, breaks = 90)
 
 ![](images/4-Russell.png)
 
-
+<mark> John, you can upload the folder ('images') to your Github repository with all the .png files required for this RNotebook. Your collaborators will then have access to all the images you have included in the RNotebook.
