@@ -256,12 +256,32 @@ alt_dist <-ggplot(alhdata, aes(x, y, group = group, fill=full %in% states_found)
   coord_equal()+
   scale_fill_manual(values=c('white', 'firebrick'), guide='none')+
   usmap:::theme_map()+
-  labs(title="Asian longhorned tick distribution in US states", subtitle = "As of February 2023; https://www.cdc.gov/ticks/longhorned-tick/.")+
+  labs(title="Asian longhorned tick distribution in US states", subtitle = "As of February 2023; <https://www.cdc.gov/ticks/longhorned-tick/>.")+
   theme(panel.background=element_rect(color="black", fill="gray"))
 
 alt_dist
 
 ```
-# extra code #
+# My own #
+```{r}
+library(ggplot2)
+library(usmap)
+library(dplyr)
+
+alhdata <-us_map(regions="states")
+
+states_found <- c("Montana","West Virginia","Alabama","New Jersey","Texas","New York","Maryland","Tennessee","Kentucky","New Mexico","Georgia","Connecticut","Delaware","Missouri","South Carolina","Arkansas","Massachusetts","Alaska") 
+
+alt_dist <-ggplot(alhdata, aes(x, y, group = group, fill=full %in% states_found)) +
+  geom_polygon(color='brown')+
+  coord_equal()+
+  scale_fill_manual(values=c('white', 'blue'), guide='none')+
+  usmap:::theme_map()+
+  labs(title="Random states that i chose", subtitle = "As of October 2023")+
+  theme(panel.background=element_rect(color="green", fill="orange"))
+
+alt_dist
+```
+
 
  
