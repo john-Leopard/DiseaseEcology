@@ -282,6 +282,25 @@ alt_dist <-ggplot(alhdata, aes(x, y, group = group, fill=full %in% states_found)
 
 alt_dist
 ```
+```{r}
+library(ggplot2)
+library(usmap)
+library(dplyr)
+
+alhdata <-us_map(regions="states")
+
+states_found <- c("Arkansas","Georgia","Illinois","Indiana","Iowa","Kansas","Kenmtucky","Missouri","New York","North Carolina","Oklahoma","Pennsylvania","Tennessee","Virginia") 
+
+alt_dist <-ggplot(alhdata, aes(x, y, group = group, fill=full %in% states_found)) +
+  geom_polygon(color='cyan')+
+  coord_equal()+
+  scale_fill_manual(values=c('white', 'blue'), guide='none')+
+  usmap:::theme_map()+
+  labs(title="Heartland virus disease cases by state,", subtitle = "As of November 2022")+
+  theme(panel.background=element_rect(color="blue", fill="gray"))
+
+alt_dist
+```
 
 
  
