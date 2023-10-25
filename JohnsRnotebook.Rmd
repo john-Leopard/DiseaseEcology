@@ -232,6 +232,36 @@ B = 0.952
  ![](images/SIRFROG.png)
  
 ### By day 25 most of what has happened will have occured. By this day the diseases has come and gone where 80% of individuals had become infected leaving 20% of the population to never get sick and become bullies. The peak infectious rate reaches around 18%. 
- 
- # - Lab 6 - #
+
+---
+
+
+# - Oct. 25th 2023 - # 
+
+(cont+opt=i amkes this)
+
+### creating disease occurense map ###
+
+```{r}
+library(ggplot2)
+library(usmap)
+library(dplyr)
+
+alhdata <-us_map(regions="states")
+
+states_found <- c("Virginia","West Virginia","North Carolina","New Jersey","Pennsylvania","New York","Maryland","Tennessee","Kentucky","Ohio","Georgia","Connecticut","Delaware","Missouri","South Carolina","Arkansas","Massachusetts","Rhode Island") 
+
+alt_dist <-ggplot(alhdata, aes(x, y, group = group, fill=full %in% states_found)) +
+  geom_polygon(color='black')+
+  coord_equal()+
+  scale_fill_manual(values=c('white', 'firebrick'), guide='none')+
+  usmap:::theme_map()+
+  labs(title="Asian longhorned tick distribution in US states", subtitle = "As of February 2023; https://www.cdc.gov/ticks/longhorned-tick/.")+
+  theme(panel.background=element_rect(color="black", fill="gray"))
+
+alt_dist
+
+```
+# extra code #
+
  
