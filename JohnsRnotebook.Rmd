@@ -238,7 +238,7 @@ B = 0.952
 
 # - Oct. 25th 2023 - # 
 
-(cont+opt=i amkes this)
+(cont+opt=i mqkes this)
 
 ### creating disease occurense map ###
 
@@ -302,5 +302,75 @@ alt_dist <-ggplot(alhdata, aes(x, y, group = group, fill=full %in% states_found)
 alt_dist
 ```
 
+# playing around with maps #
+Code below is base code as example
+https://eriqande.github.io/rep-res-eeb-2017/map-making-in-R.html
+```{r}
+library(ggplot2)
+library(usmap)
+library(dplyr)
+
+pacman::p_load(usmap,BiocManager,sf,devtools,tidyverse)
+devtools::install_github("wmurphyrd/fiftystater")
+#> Linking to GEOS 3.6.1, GDAL 2.2.3, proj.4 4.9.3
+library(fiftystater)
+
+sf_fifty <- sf::st_as_sf(fifty_states, coords = c("long", "lat")) %>% 
+    group_by(id, piece) %>% 
+    summarize(do_union = FALSE) %>%
+    st_cast("POLYGON") %>% 
+    ungroup()
+
+eight <- sf_fifty %>%
+    filter(
+        id %in% c(
+            "iowa","minnesota","missouri","nebraska","north dakota",
+            "south dakota","arkansas"
+        )
+    ) %>%
+    summarise(id = "eight")
+
+ggplot() +
+    theme_minimal() +
+    geom_sf(data = sf_fifty) +
+    geom_sf(data = eight) +
+    geom_sf_text(
+        data = eight,
+        aes(label = "8"),
+        size = 3,
+        color = "blue",
+        nudge_x = -0.1,
+        nudge_y = 3.0
+    )
+```
+
+# - Nov. 8th 2023 - # 
+
+(cont+opt=i mqkes this)
+
+### Making a map using counties ###
+
+
+```{r}
+library(tidyverse)
+cwd1 <- read.csv("cwdcounties_fip.csv", header=TRUE)
+cwd <- cwd1[["fip"]]
+
+maps::county.fips %>%
+  as_tibble %>%
+  extract(polyname, c("region", "subregion"), "^([^,]+),([^,]+)$") ->
+  dfips
+
+map_data("county") %>%
+  left_join(dfips) ->
+  dall
+
+dall %>%
+  mutate(is_example = fips %in% cwd) %>%
+  ggplot(aes(long, lat, group = group)) +
+  geom_polygon(aes(fill=is_example), color="gray70") + 
+  coord_map() +
+  scale_fill_manual(values=c("TRUE"="red", "FALSE"="gray90"))
+```
 
  
